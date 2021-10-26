@@ -19,6 +19,11 @@ export const DivNote = styled.div`
 
 export const P = styled.p`
   overflow-wrap: break-word;
+  margin: 0;
+
+  @media (max-width: 430px) {
+    font-size: 1.3em;
+  }
 `;
 
 export const A = styled(Link)`
@@ -41,7 +46,7 @@ const Notes = () => {
               <DivNote>
                 {article.tag !== "" ? <h6>Tag: {article.tag}</h6> : ""}
                 <h3>{article.title}</h3>
-                <P>{article.body}</P>
+                <p>{article.body}</p>
               </DivNote>
             </A>
           </Grid>

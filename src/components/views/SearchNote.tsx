@@ -25,7 +25,7 @@ const SearchNote = () => {
               <DivNote>
                 {article.tag !== "" ? <h6>Tag: {article.tag}</h6> : ""}
                 <h3>{article.title}</h3>
-                <P>{article.body}</P>
+                <p>{article.body}</p>
               </DivNote>
             </A>
           </Grid>

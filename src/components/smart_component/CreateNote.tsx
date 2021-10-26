@@ -1,9 +1,11 @@
 import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
-import { RootState } from "../../state/reducers";
+import { P } from "../views/Notes";
+import { RootState } from "../../state/index";
 import { actionCreators } from "../../state/index";
 import { bindActionCreators } from "redux";
 import { color } from "../../colors";
+import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { useRef } from "react";
@@ -73,6 +75,7 @@ const CreateNote = () => {
   const formState = useSelector(selectForm);
   const history = useHistory();
   const dispatch = useDispatch();
+  const alert = useAlert();
 
   const { setTag, setBody, setTitle, setArticles, setId } = bindActionCreators(
     actionCreators,
@@ -103,7 +106,7 @@ const CreateNote = () => {
 
     history.push("/");
 
-    alert("done");
+    alert.success("note added!");
   };
 
   return (
@@ -159,10 +162,12 @@ const CreateNote = () => {
                 }}
                 type="submit"
               >
-                save
+                <P>save</P>
               </Button>
               <Link to="/">
-                <Button style={{ backgroundColor: color.navy }}>cancel</Button>
+                <Button style={{ backgroundColor: color.navy }}>
+                  <P>cancel</P>
+                </Button>
               </Link>
             </Grid>
           </form>

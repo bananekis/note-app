@@ -27,7 +27,10 @@ const selectArticles = (state: RootState) => state.articles;
 const Tags = () => {
   const articlesState = useSelector(selectArticles);
 
-  const filtered = articlesState.filter((article, index) => article.tag !== "");
+  const filtered = articlesState.filter(
+    (article, index, self) =>
+      self.findIndex((t) => t.tag === article.tag) === index
+  );
 
   return (
     <>

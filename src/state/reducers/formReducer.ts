@@ -1,3 +1,5 @@
+import { Action } from "../actions";
+
 export type Form = {
   id: number;
   title: string;
@@ -10,11 +12,6 @@ export const initialState = {
   title: "",
   tag: "",
   body: "",
-};
-
-type Action = {
-  type: "id" | "title" | "tag" | "body";
-  payload: any;
 };
 
 export const formReducer = (state: Form = initialState, action: Action) => {

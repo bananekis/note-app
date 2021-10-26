@@ -1,25 +1,29 @@
-import { DivCreate, DivWrapper, Img } from "./App";
+import { DivCreate, DivSignOut, DivWrapper, Img } from "../App";
 import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Route, useLocation } from "react-router";
-import { SearchBar } from "./components/smart_component/SearchBar";
-import { getArticleSlug } from "./functions/getArticleSlug";
-import CreateNote from "./components/smart_component/CreateNote";
-import EditNote from "./components/smart_component/EditNote";
-import Notes from "./components/views/Notes";
-import SearchNote from "./components/views/SearchNote";
-import TagNotes from "./components/views/TagNotes";
-import Tags from "./components/views/Tags";
-import plus from "./assets/svg/plus.svg";
-import tag from "./assets/svg/tag.svg";
+import { SearchBar } from "./smart_component/SearchBar";
+import { auth } from "../firebaseConfig";
+import { getArticleSlug } from "../functions/getArticleSlug";
+import { signOut } from "@firebase/auth";
+import { useAlert } from "react-alert";
+import CreateNote from "./smart_component/CreateNote";
+import EditNote from "./smart_component/EditNote";
+import Notes from "./views/Notes";
+import SearchNote from "./views/SearchNote";
+import TagNotes from "./views/TagNotes";
+import Tags from "./views/Tags";
+import plus from "../assets/svg/plus.svg";
+import signout from "../assets/svg/signout.svg";
+import tag from "../assets/svg/tag.svg";
 
 export const Main = () => {
   const location = useLocation();
   const slug = getArticleSlug(location, 1);
+  const alert = useAlert();
 
   return (
     <DivWrapper>
-      {/* main */}
       {slug === "" || slug === "search" ? (
         <>
           <Grid container justifyContent="center">
@@ -39,6 +43,7 @@ export const Main = () => {
               <SearchNote />
             </Route>
           </Grid>
+          {/* icons */}
           <DivCreate>
             <Link to="/tags" style={{ marginRight: "1em" }}>
               <Img src={tag} alt="tag" />
@@ -47,20 +52,32 @@ export const Main = () => {
               <Img src={plus} alt="add" />
             </Link>
           </DivCreate>
+          <DivSignOut>
+            <Link to="/">
+              <Img
+                src={signout}
+                alt="signout"
+                onClick={() => {
+                  signOut(auth);
+                  alert.success("Signed out!");
+                }}
+              />
+            </Link>
+          </DivSignOut>
         </>
       ) : (
         ""
       )}
-      <Route path="/create">
+      <Route exact path="/create">
         <CreateNote />
       </Route>
-      <Route path="/edit">
+      <Route exact path="/edit/:id">
         <EditNote />
       </Route>
-      <Route path="/tags" exact>
+      <Route exact path="/tags">
         <Tags />
       </Route>
-      <Route path="/tags/:id">
+      <Route exact path="/tags/:id">
         <TagNotes />
       </Route>
     </DivWrapper>

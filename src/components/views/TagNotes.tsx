@@ -36,7 +36,7 @@ const TagNotes = () => {
               lg={3}
               md={4}
               sm={4}
-              xs={10}
+              xs={8}
               key={article.id}
               margin={matches ? "" : "0 auto"}
             >
@@ -44,7 +44,7 @@ const TagNotes = () => {
                 <DivNote>
                   {article.tag !== "" ? <h6>Tag: {article.tag}</h6> : ""}
                   <h3>{article.title}</h3>
-                  <P>{article.body}</P>
+                  <p>{article.body}</p>
                 </DivNote>
               </A>
             </Grid>

@@ -1,3 +1,4 @@
+import "react-confirm-alert/src/react-confirm-alert.css";
 import { Button, DivForm, Input, Label, TextArea } from "./CreateNote";
 import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -6,7 +7,9 @@ import { RootState } from "../../state/reducers";
 import { actionCreators } from "../../state";
 import { bindActionCreators } from "redux";
 import { color } from "../../colors";
+import { confirmAlert } from "react-confirm-alert";
 import { getArticleSlug } from "../../functions/getArticleSlug";
+import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router";
 
@@ -17,6 +20,7 @@ const EditNote = () => {
   const history = useHistory();
   const articlesState = useSelector(selectArticles);
   const dispatch = useDispatch();
+  const alert = useAlert();
 
   const editingArticle = articlesState.find(
     (object) => object.id === +getArticleSlug(location, 2)
@@ -44,14 +48,28 @@ const EditNote = () => {
 
     history.push("/");
 
-    alert("done");
+    alert.info("note edited!");
   };
 
   const handleDelete = () => {
-    if (confirm("you sure?")) {
-      removeArticle(+getArticleSlug(location, 2));
-      history.push("/");
-    } else history.push("/");
+    confirmAlert({
+      title: "Are you sure you want to do this?",
+      message: "This action will remove your selected note",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => {
+            removeArticle(+getArticleSlug(location, 2));
+            history.push("/");
+            alert.success("Successfully deleted!");
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
   };
 
   return (
@@ -103,8 +121,9 @@ const EditNote = () => {
               <Button
                 style={{ backgroundColor: color.red }}
                 onClick={handleDelete}
+                type="button"
               >
-                delete
+                <P>delete</P>
               </Button>
               <Button
                 style={{
@@ -114,10 +133,12 @@ const EditNote = () => {
                 }}
                 type="submit"
               >
-                save
+                <P>save</P>
               </Button>
               <Link to="/">
-                <Button style={{ backgroundColor: color.navy }}>cancel</Button>
+                <Button style={{ backgroundColor: color.navy }}>
+                  <P>cancel</P>
+                </Button>
               </Link>
             </Grid>
           </form>

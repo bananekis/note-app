@@ -1,63 +1,41 @@
+import { AuthContext } from "../auth/AuthProvider";
 import { Button, Input, Label } from "./CreateNote";
 import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
-import { RootState } from "../../state/reducers";
-import { actionCreators } from "../../state";
-import { bindActionCreators } from "redux";
+import { Redirect, withRouter } from "react-router";
+import { auth } from "../../firebaseConfig";
 import { color } from "../../colors";
-import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useAlert } from "react-alert";
+import { useContext, useState } from "react";
 
-type Props = {
-  children: JSX.Element;
-};
-
-const selectIsLoggedIn = (state: RootState) => state.isLoggedIn;
-const selectUser = (state: RootState) => state.user;
-
-const LoginForm = (props: Props) => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+const LoginForm = withRouter(({ history }) => {
   const [error, setError] = useState<string>("");
-  const dispatch = useDispatch();
-  const userState = useSelector(selectUser);
+  const alert = useAlert();
 
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  const { setSignIn } = bindActionCreators(actionCreators, dispatch);
-
-  const adminUser = {
-    email: userState.email,
-    password: userState.password,
-  };
-
-  const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.currentTarget.value;
-
-    setEmail(value);
-  };
-
-  const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.currentTarget.value;
-
-    setPassword(value);
-  };
-
-  const handleSignIn = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (email !== adminUser.email || password !== adminUser.password) {
+    const { email, password }: any = e.currentTarget.elements;
+
+    if (email.value === "" || password.value === "") {
       setError("Bad credentials");
       return;
     }
 
-    setEmail("");
-    setPassword("");
-    setSignIn(true);
+    try {
+      await signInWithEmailAndPassword(auth, email.value, password.value);
+      history.push("/");
+      alert.success("Successfully logged in!");
+    } catch (error: any) {
+      alert.error("User not found.");
+      return;
+    }
   };
 
-  if (isLoggedIn) {
-    return props.children;
-  }
+  const { currentUser } = useContext(AuthContext);
+
+  if (currentUser) return <Redirect to="/" />;
 
   return (
     <>
@@ -76,16 +54,11 @@ const LoginForm = (props: Props) => {
       <form onSubmit={handleSignIn}>
         <Grid item lg={3} md={6} sm={8} xs={10} margin="0 auto">
           <Label htmlFor="email">Email</Label>
-          <Input type="email" id="email" value={email} onChange={handleEmail} />
+          <Input type="email" id="email" />
         </Grid>
         <Grid item lg={3} md={6} sm={8} xs={10} margin="0 auto">
           <Label htmlFor="password">Password</Label>
-          <Input
-            type="password"
-            id="password"
-            value={password}
-            onChange={handlePassword}
-          />
+          <Input type="password" id="password" />
         </Grid>
         <Grid
           item
@@ -112,6 +85,6 @@ const LoginForm = (props: Props) => {
       </form>
     </>
   );
-};
+});
 
 export default LoginForm;

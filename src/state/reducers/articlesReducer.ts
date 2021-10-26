@@ -1,3 +1,4 @@
+import { Action } from "../actions";
 import { Form } from "./formReducer";
 
 export type Articles = {
@@ -6,12 +7,6 @@ export type Articles = {
   tag?: string;
   body: string;
 }[];
-
-type Action = {
-  type: "articles" | "edit-title" | "edit-tag" | "edit-body" | "remove-article";
-  payload: any;
-  id: number;
-};
 
 export const articlesReducer = (state: Articles = [], action: Action) => {
   switch (action.type) {
