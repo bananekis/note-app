@@ -1,7 +1,8 @@
-import { A, DivNote, P } from "./Notes";
+import { A } from "./Notes";
 import { Grid } from "@mui/material";
 import { RootState } from "../../state/reducers";
 import { useSelector } from "react-redux";
+import Note from "../dumb_component/Note";
 
 const selectSearch = (state: RootState) => state.search;
 const selectArticles = (state: RootState) => state.articles;
@@ -22,11 +23,7 @@ const SearchNote = () => {
         {filteredResults.map((article) => (
           <Grid item xs={3} key={article.id}>
             <A to={`/edit/${article.id}`}>
-              <DivNote>
-                {article.tag !== "" ? <h6>Tag: {article.tag}</h6> : ""}
-                <h3>{article.title}</h3>
-                <p>{article.body}</p>
-              </DivNote>
+              <Note article={article}/>
             </A>
           </Grid>
         ))}

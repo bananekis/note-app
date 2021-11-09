@@ -27,7 +27,8 @@ export const DivSignOut = styled(DivFixed)`
   right: 76%;
 
   @media (max-width: 430px) {
-    right: 73%;
+    right: 69%;
+    bottom: 10.5%;
   }
 `;
 

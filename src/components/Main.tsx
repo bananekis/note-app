@@ -1,4 +1,4 @@
-import { DivCreate, DivSignOut, DivWrapper, Img } from "../App";
+import { DivCreate, DivFixed, DivSignOut, DivWrapper, Img } from "../App";
 import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Route, useLocation } from "react-router";
@@ -44,26 +44,28 @@ export const Main = () => {
             </Route>
           </Grid>
           {/* icons */}
-          <DivCreate>
-            <Link to="/tags" style={{ marginRight: "1em" }}>
-              <Img src={tag} alt="tag" />
-            </Link>
-            <Link to="/create">
-              <Img src={plus} alt="add" />
-            </Link>
-          </DivCreate>
-          <DivSignOut>
-            <Link to="/">
-              <Img
-                src={signout}
-                alt="signout"
-                onClick={() => {
-                  signOut(auth);
-                  alert.success("Signed out!");
-                }}
-              />
-            </Link>
-          </DivSignOut>
+          <DivFixed>
+            <DivCreate>
+              <Link to="/tags" style={{ marginRight: "1em" }}>
+                <Img src={tag} alt="tag" />
+              </Link>
+              <Link to="/create">
+                <Img src={plus} alt="add" />
+              </Link>
+            </DivCreate>
+            <DivSignOut>
+              <Link to="/">
+                <Img
+                  src={signout}
+                  alt="signout"
+                  onClick={() => {
+                    signOut(auth);
+                    alert.success("Signed out!");
+                  }}
+                />
+              </Link>
+            </DivSignOut>
+          </DivFixed>
         </>
       ) : (
         ""

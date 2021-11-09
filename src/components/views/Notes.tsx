@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { RootState } from "../../state/reducers";
 import { color } from "../../colors";
 import { useSelector } from "react-redux";
+import Note from "../dumb_component/Note";
 import styled from "styled-components";
 
 export const DivNote = styled.div`
@@ -32,6 +33,32 @@ export const A = styled(Link)`
   list-style: none;
 `;
 
+export const H3 = styled.h3`
+  margin: 0;
+`;
+
+export const PNote = styled.p`
+    border: 1px solid ${color.lightGrey};
+    padding: 10px;
+    border-radius: 5px;
+    word-wrap: break-word;
+    white-space: break-spaces;
+`;
+
+export const SpanNote = styled.span`
+  display:block;
+`;
+
+export const DivNoteHeading = styled.div`
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const H2 = styled.h2`
+  margin: 0;
+`;
+
 const selectArticles = (state: RootState) => state.articles;
 
 const Notes = () => {
@@ -43,11 +70,7 @@ const Notes = () => {
         {articlesState.map((article) => (
           <Grid item lg={3} md={4} sm={4} xs={6} key={article.id}>
             <A to={`/edit/${article.id}`}>
-              <DivNote>
-                {article.tag !== "" ? <h6>Tag: {article.tag}</h6> : ""}
-                <h3>{article.title}</h3>
-                <p>{article.body}</p>
-              </DivNote>
+              <Note article={article}/>
             </A>
           </Grid>
         ))}

@@ -1,4 +1,4 @@
-import { A, DivNote, P } from "./Notes";
+import { A } from "./Notes";
 import { DivCreate, Img } from "../../App";
 import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -7,6 +7,7 @@ import { getArticleSlug } from "../../functions/getArticleSlug";
 import { useLocation } from "react-router";
 import { useSelector } from "react-redux";
 import { useTheme } from "@mui/material";
+import Note from "../dumb_component/Note";
 import back from "../../assets/svg/back.svg";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
@@ -26,7 +27,7 @@ const TagNotes = () => {
       <>
         <Grid container>
           <Grid item xs={12} textAlign="center">
-            <h1>#{slug} Tag notes</h1>
+            <h1>#{slug} notes</h1>
           </Grid>
         </Grid>
         <Grid container justifyContent="center">
@@ -41,11 +42,7 @@ const TagNotes = () => {
               margin={matches ? "" : "0 auto"}
             >
               <A to={`/edit/${article.id}`}>
-                <DivNote>
-                  {article.tag !== "" ? <h6>Tag: {article.tag}</h6> : ""}
-                  <h3>{article.title}</h3>
-                  <p>{article.body}</p>
-                </DivNote>
+                <Note article={article}/>
               </A>
             </Grid>
           ))}
