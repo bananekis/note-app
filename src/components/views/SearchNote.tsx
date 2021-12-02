@@ -23,7 +23,7 @@ const SearchNote = () => {
         {filteredResults.map((article) => (
           <Grid item xs={3} key={article.id}>
             <A to={`/edit/${article.id}`}>
-              <Note article={article}/>
+              <Note article={article} />
             </A>
           </Grid>
         ))}

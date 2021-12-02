@@ -74,7 +74,7 @@ export const RegisterForm = withRouter(({ history }) => {
           >
             register
           </Button>
-          <Link to="/">
+          <Link to="/login">
             <Button style={{ backgroundColor: color.black }}>log in</Button>
           </Link>
         </Grid>

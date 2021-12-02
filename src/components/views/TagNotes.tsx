@@ -42,7 +42,7 @@ const TagNotes = () => {
               margin={matches ? "" : "0 auto"}
             >
               <A to={`/edit/${article.id}`}>
-                <Note article={article}/>
+                <Note article={article} />
               </A>
             </Grid>
           ))}

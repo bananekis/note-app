@@ -48,7 +48,7 @@ const LoginForm = withRouter(({ history }) => {
         margin="0 auto"
         textAlign="center"
       >
-        <h1>Log in</h1>
+        <h1>Log in to the Note App!</h1>
         <p style={{ color: color.red }}>{error !== "" ? error : ""}</p>
       </Grid>
       <form onSubmit={handleSignIn}>

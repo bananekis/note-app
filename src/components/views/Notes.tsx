@@ -38,19 +38,19 @@ export const H3 = styled.h3`
 `;
 
 export const PNote = styled.p`
-    border: 1px solid ${color.lightGrey};
-    padding: 10px;
-    border-radius: 5px;
-    word-wrap: break-word;
-    white-space: break-spaces;
+  border: 1px solid ${color.lightGrey};
+  padding: 10px;
+  border-radius: 5px;
+  word-wrap: break-word;
+  white-space: break-spaces;
 `;
 
 export const SpanNote = styled.span`
-  display:block;
+  display: block;
 `;
 
 export const DivNoteHeading = styled.div`
-  display:flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
 `;
@@ -70,7 +70,7 @@ const Notes = () => {
         {articlesState.map((article) => (
           <Grid item lg={3} md={4} sm={4} xs={6} key={article.id}>
             <A to={`/edit/${article.id}`}>
-              <Note article={article}/>
+              <Note article={article} />
             </A>
           </Grid>
         ))}
